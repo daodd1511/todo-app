@@ -6,7 +6,6 @@ import {useStore} from "./store/index.js"
 import {ref} from 'vue'
 const newTask = ref('');
 const store = useStore();
-const isDark = ref(false);
 const addTask = ()=>{
   store.addTask(newTask.value);
   newTask.value = "";
@@ -17,20 +16,34 @@ const sortItems = [
   {name:"Completed"},
 ];
 const clear = () => {
-  for(let el of store.tasks){
-    // console.log(el);
+  for(let el of store.filteredTasks){
     if(el.done){
+      console.log('a');
       store.removeTask(el);
     }
   }
 };
+const filterTask = (state,i)=>{
+  store.activeEl = i
+  store.filteredTasks = store.tasks.filter((value)=>{
+    if(state=="Active"){
+      return value.done == false;
+    } 
+    else if(state=="Completed"){
+      return value.done == true;
+    }
+    else if(state=="All"){
+      return value;
+    }
+  })
+}
 </script>
 
 <template>
     <div :class="[store.isDark ? `dark` : ``]">
       <div class="h-screen dark:bg-dark-bg overflow-y-scroll">
         <div class="z-0 h-72 dark:bg-desktop-dark bg-desktop-light bg-cover bg-center">
-          <div class="container z-10 w-11/12 md:w-1/2 lg:w-1/3 h-screen mx-auto py-16">
+          <div class="container z-10 w-11/12 md:w-3/5 lg:w-2/5 h-auto mx-auto pt-16 pb-40 sm:py-16">
             <div class="flex justify-between">
               <h1 class="text-3xl font-bold tracking-widest text-very-light-gray">TODO</h1>
               <i class="bg-icon-moon dark:bg-icon-sun w-[26px] h-[26px] cursor-pointer transition ease-in delay-1000" @click="store.toggleTheme"></i>
@@ -45,20 +58,22 @@ const clear = () => {
                 @keypress.enter="addTask"
                 >
             </div>
-            <div class="rounded overflow-hidden">
-              <Task v-for="(task,i) in store.tasks" :key="i" :task="task"/>
-              <div class="w-full h-12 bg-very-light-gray dark:bg-dark-bg-secondary flex justify-between items-center px-4">
-                <p class="text-sm text-dark-grayish-blue dark:text-dark-text-secondary">{{store.counter}} items left</p>
-                <div class="flex text-sm gap-4">
-                  <!-- <button
-                    v-for="(item,i) in sortItems" :key="i"
-                    class="cursor-pointer dark:text-dark-text-secondary"
-                  >
-                    {{item.name}}
-                  </button> -->
-                </div>
-                <button class="text-sm dark:text-dark-text-secondary" @click="clear">Clear Completed</button>
+            <div class="rounded-t overflow-hidden shadow-xl">
+              <Task v-for="(task,i) in store.filteredTasks" :key="i" :task="task"/>
+            </div>
+            <div class="w-full h-12 bg-very-light-gray dark:bg-dark-bg-secondary flex justify-between         items-center px-4 rounded-b relative shadow-xl">
+              <p class="text-xs text-dark-grayish-blue dark:text-dark-text-secondary">{{store.counter}} {{store.counter>=2 ? `items` : `item`}} left</p>
+              <div class="flex text-sm absolute bottom-[-5rem] left-0 rounded w-full h-12 justify-center bg-very-light-gray dark:bg-dark-bg-secondary gap-4 shadow-xl sm:static sm:shadow-none sm:w-fit">
+                <button
+                  @click="filterTask(`${item.name}`,i)"
+                  v-for="(item,i) in sortItems" :key="i"
+                  class="dark:text-dark-text-secondary"
+                  :class="[store.activeEl===i ? `active` : ``]"
+                >
+                  {{item.name}}
+                </button>
               </div>
+              <button class="text-sm dark:text-dark-text-secondary" @click="clear()">Clear Completed</button>
             </div>
           </div>
         </div>
