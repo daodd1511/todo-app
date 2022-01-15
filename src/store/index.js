@@ -3,8 +3,10 @@ export const useStore = defineStore('main', {
     state: () => {
         return {
             tasks: [],
+            filteredTasks: [],
             counter: 0,
-            isDark: false
+            isDark: false,
+            activeEl: 0,
         }
     },
     actions: {
@@ -12,6 +14,7 @@ export const useStore = defineStore('main', {
             if(task!=""){
                 this.tasks = [{content:task, done: false}, ...this.tasks];
                 this.counter++;
+                this.filteredTasks = this.tasks;
             }
         },
         removeTask (task){
@@ -19,6 +22,7 @@ export const useStore = defineStore('main', {
             this.tasks = this.tasks.filter((value)=>{
                 return value!=task;
             })
+            this.filteredTasks = this.tasks;
             if(!task.done){this.counter--};
         },
         toggleTask (task) {
