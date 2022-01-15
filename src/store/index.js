@@ -9,11 +9,16 @@ export const useStore = defineStore('main', {
     },
     actions: {
         addTask (task) {
-            this.tasks = [{content:task, done: false}, ...this.tasks];
-            this.counter++;
+            if(task!=""){
+                this.tasks = [{content:task, done: false}, ...this.tasks];
+                this.counter++;
+            }
         },
         removeTask (task){
-            this.tasks.splice(this.tasks.indexOf(task), 1);
+            // this.tasks.splice(this.tasks.indexOf(task), 1);
+            this.tasks = this.tasks.filter((value)=>{
+                return value!=task;
+            })
             if(!task.done){this.counter--};
         },
         toggleTask (task) {
