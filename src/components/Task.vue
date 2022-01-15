@@ -1,6 +1,6 @@
 <template>
     <div 
-      class="w-full h-12 bg-very-light-gray dark:bg-dark-bg-secondary flex items-center gap-4 px-4 border-b border-light-grayish-blue dark:border-dark-border relative"
+      class="w-full h-auto bg-very-light-gray dark:bg-dark-bg-secondary flex items-center gap-4 px-4 py-[10px] border-b border-light-grayish-blue dark:border-dark-border relative"
     >
       <div class="w-5 h-5 rounded-full flex items-center justify-center cursor-pointer" :class="[props.task.done ? `check` : ``]"
       @click="store.toggleTask(props.task)">
@@ -8,6 +8,7 @@
 			</div>
       <p 
         :class="[props.task.done ? taskDone.text : taskNotDone.text]"
+        class="w-3/4 break-words"
       >
       {{props.task.content}}
       </p>
