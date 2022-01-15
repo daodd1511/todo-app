@@ -20,7 +20,6 @@ const clear = () => {
   for(let el of store.tasks){
     // console.log(el);
     if(el.done){
-      console.log(el);
       store.removeTask(el);
     }
   }
@@ -31,7 +30,7 @@ const clear = () => {
     <div :class="[store.isDark ? `dark` : ``]">
       <div class="h-screen dark:bg-dark-bg overflow-y-scroll">
         <div class="z-0 h-72 dark:bg-desktop-dark bg-desktop-light bg-cover bg-center">
-          <div class="container z-10 w-1/3 h-screen mx-auto py-16">
+          <div class="container z-10 w-11/12 md:w-1/2 lg:w-1/3 h-screen mx-auto py-16">
             <div class="flex justify-between">
               <h1 class="text-3xl font-bold tracking-widest text-very-light-gray">TODO</h1>
               <i class="bg-icon-moon dark:bg-icon-sun w-[26px] h-[26px] cursor-pointer transition ease-in delay-1000" @click="store.toggleTheme"></i>
@@ -51,12 +50,12 @@ const clear = () => {
               <div class="w-full h-12 bg-very-light-gray dark:bg-dark-bg-secondary flex justify-between items-center px-4">
                 <p class="text-sm text-dark-grayish-blue dark:text-dark-text-secondary">{{store.counter}} items left</p>
                 <div class="flex text-sm gap-4">
-                  <button
+                  <!-- <button
                     v-for="(item,i) in sortItems" :key="i"
                     class="cursor-pointer dark:text-dark-text-secondary"
                   >
                     {{item.name}}
-                  </button>
+                  </button> -->
                 </div>
                 <button class="text-sm dark:text-dark-text-secondary" @click="clear">Clear Completed</button>
               </div>
