@@ -4,6 +4,9 @@
 import Task from "../components/Task.vue"
 import {useStore} from "../store/index.js"
 import {ref} from 'vue'
+import useAuth from "../composable/useAuth.js"
+
+const { isAuthenticated, logout, user } = useAuth();
 const newTask = ref('');
 const store = useStore();
 const addTask = ()=>{
@@ -80,7 +83,9 @@ const filterTask = (state,i)=>{
       </div>
     </div>
     <div class="absolute top-10 right-10">
-        <p><router-link to="/login">Login</router-link></p>
+        <button v-if="!isAuthenticated"><router-link to="/login">Login</router-link></button>
+        <button v-else @click="logout"><router-link to="/">Logout</router-link></button>
+        {{isAuthenticated}}
     </div>
 </template>
 
