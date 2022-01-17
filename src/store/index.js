@@ -15,6 +15,7 @@ export const useStore = defineStore('main', {
                 this.tasks = [{content:task, done: false}, ...this.tasks];
                 this.counter++;
                 this.filteredTasks = this.tasks;
+                this.activeEl = 0;
             }
         },
         removeTask (task){
