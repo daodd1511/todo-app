@@ -69,13 +69,13 @@ const name = user.value.split('@')[0]
         </div>
       </div>
     </div>
-    <div class="absolute top-10 right-10">
+    <!-- <div class="absolute top-10 right-10">
         <button v-if="!isAuthenticated"><router-link to="/login">Login</router-link></button>
         <div v-else>
           Hello {{name}}, 
           <button @click="logout"><router-link to="/">Logout</router-link></button>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <style>
