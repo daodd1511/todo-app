@@ -7,7 +7,11 @@ export const useStore = defineStore('main', {
             counter: 0,
             isDark: false,
             activeEl: 0,
+            activeTask: [],
+            completedTask: [],
         }
+    },
+    getters: {  
     },
     actions: {
         addTask (task) {
@@ -26,17 +30,31 @@ export const useStore = defineStore('main', {
             this.filteredTasks = this.tasks;
             if(!task.done){this.counter--};
         },
+        filterTask (item) {
+            this.activeEl = item.id;
+            this.filteredTasks = this.tasks.filter((value)=>{
+              if(item.name=="Active"){
+                return value.done == false;
+              } 
+              else if(item.name=="Completed"){
+                return value.done == true;
+              }
+              else if(item.name=="All"){
+                return value;
+              }
+           })
+        },
         toggleTask (task) {
-            if(task.done){
-                this.counter++;
-            }
-            else{
+            task.done = !task.done;
+            if(task.done==true){
                 this.counter--;
             }
-            task.done = !task.done;
+            else{
+                this.counter++;
+            }
         },
         toggleTheme (){
             this.isDark = !this.isDark;
-        }
+        },
     },
 })
