@@ -14,32 +14,19 @@ const addTask = ()=>{
   newTask.value = "";
 }
 const sortItems = [
-  {name:"All"},
-  {name:"Active"},
-  {name:"Completed"},
+  {name:"All",id:0},
+  {name:"Active",id:1},
+  {name:"Completed",id:2},
 ];
 const clear = () => {
   for(let el of store.filteredTasks){
     if(el.done){
-      console.log('a');
       store.removeTask(el);
+      store.activeEl = 0;
     }
   }
 };
-const filterTask = (state,i)=>{
-  store.activeEl = i
-  store.filteredTasks = store.tasks.filter((value)=>{
-    if(state=="Active"){
-      return value.done == false;
-    } 
-    else if(state=="Completed"){
-      return value.done == true;
-    }
-    else if(state=="All"){
-      return value;
-    }
-  })
-}
+const name = user.value.split('@')[0]
 </script>
 
 <template>
@@ -68,8 +55,8 @@ const filterTask = (state,i)=>{
               <p class="text-xs text-dark-grayish-blue dark:text-dark-text-secondary">{{store.counter}} {{store.counter>=2 ? `tasks` : `task`}} left</p>
               <div class="flex text-sm absolute bottom-[-5rem] left-0 rounded w-full h-12 justify-center bg-very-light-gray dark:bg-dark-bg-secondary gap-4 shadow-xl sm:static sm:shadow-none sm:w-fit">
                 <button
-                  @click="filterTask(`${item.name}`,i)"
                   v-for="(item,i) in sortItems" :key="i"
+                  @click="store.filterTask(item)"
                   class="dark:text-dark-text-secondary"
                   :class="[store.activeEl===i ? `active` : ``]"
                 >
@@ -84,8 +71,10 @@ const filterTask = (state,i)=>{
     </div>
     <div class="absolute top-10 right-10">
         <button v-if="!isAuthenticated"><router-link to="/login">Login</router-link></button>
-        <button v-else @click="logout"><router-link to="/">Logout</router-link></button>
-        {{isAuthenticated}}
+        <div v-else>
+          Hello {{name}}, 
+          <button @click="logout"><router-link to="/">Logout</router-link></button>
+        </div>
     </div>
 </template>
 
