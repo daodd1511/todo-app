@@ -7,7 +7,6 @@
             <input type="submit" value="Login">
             <p><router-link to="/register">Register</router-link></p>
         </form>
-        <button @click="test">test</button>
     </div>
 </template>
 
