@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import useFireStore from "../composable/useFireStore";
+const { addData } = useFireStore();
 export const useStore = defineStore("main", {
   state: () => {
     return {
@@ -21,7 +23,7 @@ export const useStore = defineStore("main", {
         this.activeEl = 0;
       }
     },
-    removeTask(task) {
+    removeTask(task, uid) {
       // this.tasks.splice(this.tasks.indexOf(task), 1);
       this.tasks = this.tasks.filter((value) => {
         return value != task;
@@ -30,6 +32,7 @@ export const useStore = defineStore("main", {
       if (!task.done) {
         this.counter--;
       }
+      addData(this.tasks, uid);
     },
     filterTask(item) {
       this.activeEl = item.id;
