@@ -3,14 +3,18 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import Task from "../components/Task.vue";
 import { useStore } from "../store/index.js";
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import useAuth from "../composable/useAuth.js";
-
+import useFireStore from "../composable/useFireStore";
+const { addData, readData } = useFireStore();
 const { isAuthenticated, logout, user } = useAuth();
 const newTask = ref("");
 const store = useStore();
+const userid = user.value.id;
+
 const addTask = () => {
   store.addTask(newTask.value);
+  addData(store.tasks, userid);
   newTask.value = "";
 };
 const sortItems = [
@@ -21,12 +25,18 @@ const sortItems = [
 const clear = () => {
   for (let el of store.filteredTasks) {
     if (el.done) {
-      store.removeTask(el);
+      store.removeTask(el, userid);
       store.activeEl = 0;
     }
   }
+  // addData(store.tasks, userid);
 };
-const name = user.value.split("@")[0];
+onBeforeMount(() => {
+  if (isAuthenticated.value) {
+    readData(userid);
+    store.counter = store.tasks.length;
+  }
+});
 </script>
 
 <template>
@@ -99,15 +109,18 @@ const name = user.value.split("@")[0];
       </div>
     </div>
   </div>
-  <!-- <div class="absolute top-10 right-10">
+  <div class="absolute top-10 right-10">
     <button v-if="!isAuthenticated">
       <router-link to="/login">Login</router-link>
     </button>
     <div v-else>
-      Hello {{ name }},
+      ID {{ userid }},
       <button @click="logout"><router-link to="/">Logout</router-link></button>
     </div>
-  </div> -->
+  </div>
+  <button @click="addData(store.tasks, userid)">Test</button>
+  <button @click="readData(userid)">Test</button>
+  <!-- <button @click="addData(store.tasks, userid)">Test</button> -->
 </template>
 
 <style></style>
