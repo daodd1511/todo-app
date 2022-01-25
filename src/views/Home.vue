@@ -31,9 +31,9 @@ const clear = () => {
   }
   // addData(store.tasks, userid);
 };
-onBeforeMount(() => {
+onBeforeMount(async () => {
   if (isAuthenticated.value) {
-    readData(userid);
+    await readData(userid);
     store.counter = store.tasks.length;
   }
 });
