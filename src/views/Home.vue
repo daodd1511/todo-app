@@ -29,7 +29,6 @@ const clear = () => {
       store.activeEl = 0;
     }
   }
-  // addData(store.tasks, userid);
 };
 onBeforeMount(async () => {
   if (isAuthenticated.value) {
