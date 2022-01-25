@@ -7,7 +7,7 @@ import {
 import { firebaseAuth } from "./useFirebase";
 
 const isAuthenticated = ref(false);
-const user = ref("");
+const user = ref({});
 
 const useAuth = () => {
   const login = async (email, password) => {
@@ -18,7 +18,7 @@ const useAuth = () => {
     );
     if (credentials.user) {
       isAuthenticated.value = true;
-      user.value = credentials.user.email;
+      user.value = { name: credentials.user.email, id: credentials.user.uid };
     }
   };
   const register = async (email, password) => {
