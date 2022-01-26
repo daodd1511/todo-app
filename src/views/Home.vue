@@ -15,11 +15,7 @@ const newTask = ref("");
 const isAuthenticated = ref(false);
 const addTask = () => {
   store.addTask(newTask.value);
-  addData(
-    store.tasks,
-    firebaseAuth.currentUser.uid,
-    store.isDark != undefined ? store.isDark : false
-  );
+  addData(store.tasks, firebaseAuth.currentUser.uid);
   newTask.value = "";
 };
 const sortItems = [

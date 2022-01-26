@@ -2,11 +2,10 @@ import { useStore } from "../store/store.js";
 import { db } from "./useFirebase";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 const useFireStore = () => {
-  const addData = async (tasks, uid, isDark) => {
+  const addData = async (tasks, uid) => {
     try {
       await setDoc(doc(db, "users", uid), {
         tasks,
-        isDark,
       });
     } catch (error) {
       console.log("Error handling document: ", error);
