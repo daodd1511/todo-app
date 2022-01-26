@@ -21,7 +21,6 @@ const useFireStore = () => {
             store.tasks.push(task);
           }
           store.filteredTasks = store.tasks;
-          store.isDark = doc.data().isDark;
         }
       });
     } catch (error) {
