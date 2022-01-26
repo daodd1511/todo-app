@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { useStore } from "../store/index.js";
+import { useStore } from "../store/store.js";
 import useAuth from "../composable/useAuth.js";
 const { user } = useAuth();
 const userid = user.value.id;

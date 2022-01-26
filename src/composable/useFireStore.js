@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { useStore } from "../store/index.js";
+import { useStore } from "../store/store.js";
 import { db, firebaseAuth } from "./useFirebase";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 const useFireStore = () => {
