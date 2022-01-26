@@ -1,12 +1,12 @@
-import { ref } from "vue";
 import { useStore } from "../store/store.js";
-import { db, firebaseAuth } from "./useFirebase";
+import { db } from "./useFirebase";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 const useFireStore = () => {
-  const addData = async (tasks, uid) => {
+  const addData = async (tasks, uid, isDark) => {
     try {
       await setDoc(doc(db, "users", uid), {
         tasks,
+        isDark,
       });
     } catch (error) {
       console.log("Error handling document: ", error);
@@ -22,6 +22,7 @@ const useFireStore = () => {
             store.tasks.push(task);
           }
           store.filteredTasks = store.tasks;
+          store.isDark = doc.data().isDark;
         }
       });
     } catch (error) {
