@@ -7,7 +7,6 @@ const router = useRouter();
 const route = useRoute();
 onBeforeMount(() => {
   onAuthStateChanged(firebaseAuth, (user) => {
-    // console.log(user);
     if (user && (route.path == "/login" || route.path == "/register")) {
       router.replace("/");
     }
