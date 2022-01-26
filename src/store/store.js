@@ -32,7 +32,7 @@ export const useStore = defineStore("main", {
       if (!task.done) {
         this.counter--;
       }
-      addData(this.tasks, uid);
+      addData(this.tasks, uid, this.isDark != undefined ? this.isDark : false);
     },
     filterTask(item) {
       this.activeEl = item.id;
