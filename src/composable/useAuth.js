@@ -5,38 +5,16 @@ import {
   signOut,
 } from "firebase/auth";
 import { firebaseAuth } from "./useFirebase";
-
-const isAuthenticated = ref(false);
-const user = ref({});
-
 const useAuth = () => {
   const login = async (email, password) => {
-    const credentials = await signInWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
-    if (credentials.user) {
-      isAuthenticated.value = true;
-      user.value = { name: credentials.user.email, id: credentials.user.uid };
-    }
+    await signInWithEmailAndPassword(firebaseAuth, email, password);
   };
   const register = async (email, password) => {
-    const credentials = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
-    if (credentials.user) {
-      isAuthenticated.value = true;
-      user.value = credentials.user.email;
-    }
+    await createUserWithEmailAndPassword(firebaseAuth, email, password);
   };
   const logout = async () => {
     await signOut(firebaseAuth);
-    isAuthenticated.value = false;
-    user.value = "";
   };
-  return { isAuthenticated, login, register, logout, user };
+  return { login, register, logout };
 };
 export default useAuth;
