@@ -2,7 +2,7 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import Task from "../components/Task.vue";
-import { useStore } from "../store/index.js";
+import { useStore } from "../store/store.js";
 import { ref, onBeforeMount } from "vue";
 import useAuth from "../composable/useAuth.js";
 import useFireStore from "../composable/useFireStore";
