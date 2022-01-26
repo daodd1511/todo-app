@@ -17,16 +17,14 @@
     </p>
     <i
       class="bg-icon-cross w-[18px] h-[18px] absolute right-5 transition-all hover:rotate-90 cursor-pointer"
-      @click="store.removeTask(props.task, userid)"
+      @click="store.removeTask(props.task, firebaseAuth.currentUser.uid)"
     ></i>
   </div>
 </template>
 
 <script setup>
 import { useStore } from "../store/store.js";
-import useAuth from "../composable/useAuth.js";
-const { user } = useAuth();
-const userid = user.value.id;
+import { firebaseAuth } from "../composable/useFirebase.js";
 const store = useStore();
 const props = defineProps({
   task: Object,
