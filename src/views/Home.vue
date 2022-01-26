@@ -6,15 +6,20 @@ import { useStore } from "../store/store.js";
 import { ref, onBeforeMount } from "vue";
 import useAuth from "../composable/useAuth.js";
 import useFireStore from "../composable/useFireStore";
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../composable/useFirebase.js";
 const { addData, readData } = useFireStore();
-const { isAuthenticated, logout, user } = useAuth();
-const newTask = ref("");
+const { logout } = useAuth();
 const store = useStore();
-const userid = user.value.id;
-
+const newTask = ref("");
+const isAuthenticated = ref(false);
 const addTask = () => {
   store.addTask(newTask.value);
-  addData(store.tasks, userid);
+  addData(
+    store.tasks,
+    firebaseAuth.currentUser.uid,
+    store.isDark != undefined ? store.isDark : false
+  );
   newTask.value = "";
 };
 const sortItems = [
@@ -25,16 +30,22 @@ const sortItems = [
 const clear = () => {
   for (let el of store.filteredTasks) {
     if (el.done) {
-      store.removeTask(el, userid);
+      store.removeTask(el, firebaseAuth.currentUser.uid);
       store.activeEl = 0;
     }
   }
 };
-onBeforeMount(async () => {
-  if (isAuthenticated.value) {
-    await readData(userid);
-    store.counter = store.tasks.length;
-  }
+onBeforeMount(() => {
+  onAuthStateChanged(firebaseAuth, async (user) => {
+    if (user) {
+      await readData(user.uid);
+      store.counter = store.tasks.length;
+      isAuthenticated.value = true;
+    } else {
+      isAuthenticated.value = false;
+      store.$reset();
+    }
+  });
 });
 </script>
 
@@ -113,13 +124,10 @@ onBeforeMount(async () => {
       <router-link to="/login">Login</router-link>
     </button>
     <div v-else>
-      ID {{ userid }},
+      Hi {{ firebaseAuth.currentUser.email.split("@")[0] }},
       <button @click="logout"><router-link to="/">Logout</router-link></button>
     </div>
   </div>
-  <button @click="addData(store.tasks, userid)">Test</button>
-  <button @click="readData(userid)">Test</button>
-  <!-- <button @click="addData(store.tasks, userid)">Test</button> -->
 </template>
 
 <style></style>
