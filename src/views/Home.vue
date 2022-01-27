@@ -125,7 +125,7 @@ onBeforeMount(() => {
       </div>
     </div>
   </div>
-  <div class="absolute top-10 right-10">
+  <div class="absolute top-5 lg:top-10 right-5 lg:right-10">
     <button v-if="!isAuthenticated">
       <router-link to="/login">Login</router-link>
     </button>
