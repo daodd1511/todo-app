@@ -46,13 +46,14 @@ export const useStore = defineStore("main", {
         }
       });
     },
-    toggleTask(task) {
+    toggleTask(task, uid) {
       task.done = !task.done;
       if (task.done == true) {
         this.counter--;
       } else {
         this.counter++;
       }
+      addData(this.tasks, uid);
     },
     toggleTheme() {
       this.isDark = !this.isDark;
