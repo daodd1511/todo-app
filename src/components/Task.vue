@@ -5,7 +5,12 @@
     <div
       class="w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
       :class="[props.task.done ? `check` : ``]"
-      @click="store.toggleTask(props.task)"
+      @click="
+        store.toggleTask(
+          props.task,
+          firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
+        )
+      "
     >
       <i :class="[props.task.done ? taskDone.icon : taskNotDone.icon]"></i>
     </div>
