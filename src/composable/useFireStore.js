@@ -14,6 +14,7 @@ const useFireStore = () => {
   const readData = async (uid) => {
     try {
       const store = useStore();
+      store.$reset();
       const querySnapshot = await getDocs(collection(db, "users"));
       querySnapshot.forEach((doc) => {
         if (doc.id == uid && store.tasks.length == 0) {
