@@ -1,6 +1,8 @@
 <template>
   <div class="check h-screen flex justify-center items-center">
-    <div class="container w-1/3 h-1/2 bg-very-light-gray rounded-md p-4">
+    <div
+      class="container w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-80 bg-very-light-gray rounded-md p-4"
+    >
       <h1 class="text-3xl text-center">Register</h1>
       <form @submit.prevent="Register" class="flex flex-col gap-4">
         <input
