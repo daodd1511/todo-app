@@ -14,9 +14,14 @@ const store = useStore();
 const newTask = ref("");
 const isAuthenticated = ref(false);
 const addTask = () => {
-  store.addTask(newTask.value);
-  addData(store.tasks, firebaseAuth.currentUser.uid);
-  newTask.value = "";
+  if (isAuthenticated.value) {
+    store.addTask(newTask.value);
+    addData(store.tasks, firebaseAuth.currentUser.uid);
+    newTask.value = "";
+  } else {
+    store.addTask(newTask.value);
+    newTask.value = "";
+  }
 };
 const sortItems = [
   { name: "All", id: 0 },
@@ -26,7 +31,10 @@ const sortItems = [
 const clear = () => {
   for (let el of store.filteredTasks) {
     if (el.done) {
-      store.removeTask(el, firebaseAuth.currentUser.uid);
+      store.removeTask(
+        el,
+        firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
+      );
       store.activeEl = 0;
     }
   }
