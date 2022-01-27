@@ -18,7 +18,7 @@
         <input
           type="submit"
           value="Login"
-          class="w-full h-10 bg-dark-bg-secondary text-very-light-grayish-blue rounded-md"
+          class="w-full h-10 bg-dark-bg-secondary text-very-light-grayish-blue rounded-md cursor-pointer"
         />
         <p><router-link to="/register">Register</router-link></p>
       </form>
