@@ -43,7 +43,9 @@ onBeforeMount(() => {
   onAuthStateChanged(firebaseAuth, async (user) => {
     if (user) {
       await readData(user.uid);
-      store.counter = store.tasks.length;
+      store.counter = store.tasks.filter((task) => {
+        return !task.done;
+      }).length;
       isAuthenticated.value = true;
     } else {
       isAuthenticated.value = false;
