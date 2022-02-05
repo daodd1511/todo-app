@@ -7,7 +7,7 @@
       class="modal-overlay w-full h-full bg-black/40 flex justify-center items-center"
     >
       <div
-        class="modal-body w-10/12 h-1/3 sm:w-3/5 md:w-2/5 bg-white dark:bg-dark-bg rounded-lg flex justify-around items-center flex-col p-5"
+        class="modal-body w-10/12 h-1/3 sm:w-3/5 md:w-2/5 bg-white dark:bg-dark-bg rounded-xl flex justify-around items-center flex-col p-5"
       >
         <slot></slot>
       </div>
