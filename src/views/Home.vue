@@ -79,8 +79,8 @@
       </button>
     </div>
   </div>
-  <Modal v-if="modalActive">
-    <h1 class="title">Do you want to log out</h1>
+  <Modal v-if="modalActive" :isDark="store.isDark">
+    <h1 class="title dark:text-dark-text">Do you want to log out</h1>
     <button
       @click="logout(), (modalActive = false)"
       class="btn bg-cyan-400 shadow-cyan-400/50"
