@@ -1,7 +1,7 @@
 <template>
   <div class="check h-screen flex justify-center items-center">
     <div
-      class="container w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-72 bg-very-light-gray rounded-md p-4"
+      class="container w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-72 bg-white rounded-md p-4"
     >
       <h1 class="text-3xl text-center">Login</h1>
       <form @submit.prevent="Login" class="flex flex-col gap-4">
@@ -26,9 +26,16 @@
       </form>
     </div>
   </div>
+  <Modal v-if="modalActive">
+    <h1 class="title">{{ errorMsg }}</h1>
+    <button @click="modalActive = false" class="btn shadow-red-400/50">
+      Close
+    </button>
+  </Modal>
 </template>
 
 <script setup>
+import Modal from "../components/Modal.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import useAuth from "../composable/useAuth.js";
@@ -39,17 +46,21 @@ const { login } = useAuth();
 
 const username = ref("");
 const password = ref("");
-
+const errorMsg = ref("");
+const modalActive = ref(false);
 const router = useRouter();
 
 const handleError = (error) => {
   switch (error) {
     case "auth/wrong-password":
-      window.alert("Wrong password! Please try again");
+      errorMsg.value = "Wrong password! Please try again";
       break;
     case "auth/user-not-found":
-      window.alert("User not found! Please register or try again");
+      errorMsg.value = "User not found! Please register or try again";
+      break;
   }
+  password.value = "";
+  modalActive.value = true;
 };
 const Login = async () => {
   await login(username.value, password.value)
