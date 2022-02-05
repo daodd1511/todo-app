@@ -42,7 +42,7 @@
 
 <script setup>
 import Modal from "../components/Modal.vue";
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import useAuth from "../composable/useAuth.js";
 import { onAuthStateChanged } from "firebase/auth";
@@ -97,6 +97,11 @@ const gotoHome = () => {
     }
   });
 };
+onBeforeMount(() => {
+  if (firebaseAuth.currentUser) {
+    router.push("/");
+  }
+});
 </script>
 
 <style scoped></style>
