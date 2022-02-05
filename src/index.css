@@ -19,3 +19,12 @@ body {
 .active {
   color: hsl(220, 98%, 61%) !important;
 }
+
+@layer components {
+  .btn {
+    @apply text-xl text-white w-2/5 h-10 bg-red-400 shadow-lg rounded-full;
+  }
+  .title {
+    @apply w-3/4 text-center text-2xl;
+  }
+}
