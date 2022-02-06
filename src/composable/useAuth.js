@@ -1,8 +1,8 @@
-import { ref } from "vue";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { firebaseAuth } from "./useFirebase";
 const useAuth = () => {
@@ -15,6 +15,9 @@ const useAuth = () => {
   const logout = async () => {
     await signOut(firebaseAuth);
   };
-  return { login, register, logout };
+  const resetPassword = async (email) => {
+    await sendPasswordResetEmail(firebaseAuth, email);
+  };
+  return { login, register, logout, resetPassword };
 };
 export default useAuth;
