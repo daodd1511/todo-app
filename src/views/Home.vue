@@ -83,7 +83,7 @@
     <h1 class="title dark:text-dark-text">Do you want to log out</h1>
     <button
       @click="logout(), (modalActive = false)"
-      class="btn bg-cyan-400 shadow-cyan-400/50"
+      class="btn bg-sky-400 shadow-sky-400/50"
     >
       <router-link to="/">Yes</router-link>
     </button>
