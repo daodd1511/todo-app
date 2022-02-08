@@ -1,32 +1,32 @@
 <template>
-  <div class="check h-screen flex justify-center items-center">
+  <div class="check flex h-screen items-center justify-center">
     <div
-      class="container w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-80 bg-white rounded-md p-4"
+      class="container h-80 w-10/12 rounded-md bg-white p-4 sm:w-8/12 md:w-6/12 lg:w-4/12"
     >
-      <h1 class="text-3xl text-center">Register</h1>
+      <h1 class="text-center text-3xl">Register</h1>
       <form @submit.prevent="Register" class="flex flex-col gap-4">
         <input
           type="email"
           placeholder="Email"
           v-model="username"
-          class="w-full h-10"
+          class="h-10 w-full"
         />
         <input
           type="password"
           placeholder="Password"
           v-model="password"
-          class="w-full h-10"
+          class="h-10 w-full"
         />
         <input
           type="password"
           placeholder="Confirm Password"
           v-model="passwordConfirm"
-          class="w-full h-10"
+          class="h-10 w-full"
         />
         <input
           type="submit"
           value="Register"
-          class="w-full h-10 bg-dark-bg-secondary text-very-light-grayish-blue rounded-md cursor-pointer"
+          class="h-10 w-full cursor-pointer rounded-md bg-dark-bg-secondary text-very-light-grayish-blue"
         />
         <p><router-link to="/login">Login</router-link></p>
       </form>

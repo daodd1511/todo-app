@@ -4,10 +4,10 @@
     :class="[props.isDark ? `dark` : ``]"
   >
     <div
-      class="modal-overlay w-full h-full bg-black/40 flex justify-center items-center"
+      class="modal-overlay flex h-full w-full items-center justify-center bg-black/40"
     >
       <div
-        class="modal-body w-10/12 h-1/3 sm:w-3/5 md:w-2/5 bg-white dark:bg-dark-bg rounded-xl flex justify-around items-center flex-col p-5"
+        class="modal-body flex h-1/3 w-10/12 flex-col items-center justify-around rounded-xl bg-white p-5 dark:bg-dark-bg sm:w-3/5 md:w-2/5"
       >
         <slot></slot>
       </div>

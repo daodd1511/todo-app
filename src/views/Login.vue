@@ -1,26 +1,26 @@
 <template>
-  <div class="check h-screen flex justify-center items-center">
+  <div class="check flex h-screen items-center justify-center">
     <div
-      class="container w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-72 bg-white rounded-md p-4"
+      class="container h-72 w-10/12 rounded-md bg-white p-4 sm:w-8/12 md:w-6/12 lg:w-4/12"
     >
-      <h1 class="text-3xl text-center">Login</h1>
+      <h1 class="text-center text-3xl">Login</h1>
       <form @submit.prevent="Login" class="flex flex-col gap-4">
         <input
           type="email"
           placeholder="Email"
           v-model="username"
-          class="w-full h-10"
+          class="h-10 w-full"
         />
         <input
           type="password"
           placeholder="Password"
           v-model="password"
-          class="w-full h-10"
+          class="h-10 w-full"
         />
         <input
           type="submit"
           value="Login"
-          class="w-full h-10 bg-dark-bg-secondary text-very-light-grayish-blue rounded-md cursor-pointer"
+          class="h-10 w-full cursor-pointer rounded-md bg-dark-bg-secondary text-very-light-grayish-blue"
         />
       </form>
       <div class="pt-6">
@@ -44,17 +44,17 @@
       type="email"
       v-model="resetEmail"
       placeholder="Your email"
-      class="w-4/5 h-10 placeholder:italic focus:outline-none border-2 border-black rounded-md px-2"
+      class="h-10 w-4/5 rounded-md border-2 border-black px-2 placeholder:italic focus:outline-none"
     />
     <button
       @click="ResetPassword()"
-      class="btn w-3/4 lg:w-1/2 h-10 bg-sky-400 shadow-sky-400/50"
+      class="btn h-10 w-3/4 bg-sky-400 shadow-sky-400/50 lg:w-1/2"
     >
       Send reset link!
     </button>
     <button
       @click="modalResetPassword = false"
-      class="btn w-3/4 lg:w-1/2 h-10 shadow-red-400/50"
+      class="btn h-10 w-3/4 shadow-red-400/50 lg:w-1/2"
     >
       Close
     </button>
