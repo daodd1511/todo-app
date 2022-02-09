@@ -9,8 +9,6 @@ export const useStore = defineStore("main", {
       counter: 0,
       isDark: false,
       activeEl: 0,
-      activeTask: [],
-      completedTask: [],
     };
   },
   getters: {},
