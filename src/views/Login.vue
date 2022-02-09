@@ -1,38 +1,65 @@
 <template>
   <div class="check flex h-screen items-center justify-center">
     <div
-      class="container h-72 w-10/12 rounded-md bg-white p-4 sm:w-8/12 md:w-6/12 lg:w-4/12"
+      class="mx-auto w-11/12 max-w-sm overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800 sm:w-full"
     >
-      <h1 class="text-center text-3xl">Login</h1>
-      <form @submit.prevent="Login" class="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          v-model="username"
-          class="h-10 w-full"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          v-model="password"
-          class="h-10 w-full"
-        />
-        <input
-          type="submit"
-          value="Login"
-          class="h-10 w-full cursor-pointer rounded-md bg-dark-bg-secondary text-very-light-grayish-blue"
-        />
-      </form>
-      <div class="pt-6">
-        <p class="float-left">
+      <div class="px-6 py-4">
+        <h2 class="text-center text-3xl font-medium text-gray-600">Login</h2>
+
+        <form @submit.prevent="Login">
+          <div class="mt-4 w-full">
+            <input
+              class="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-300"
+              type="email"
+              placeholder="Email"
+              aria-label="Email"
+              v-model="username"
+            />
+          </div>
+
+          <div class="mt-4 w-full">
+            <input
+              class="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-300"
+              type="password"
+              placeholder="Password"
+              aria-label="Password"
+              v-model="password"
+            />
+          </div>
+
+          <div class="mt-4 flex items-center justify-between">
+            <a
+              href="#"
+              class="text-sm text-gray-600 hover:text-gray-500 dark:text-gray-200"
+              @click="modalResetPassword = true"
+              >Forget Password?</a
+            >
+
+            <input
+              type="submit"
+              value="Login"
+              class="transform cursor-pointer rounded bg-gray-700 px-4 py-2 leading-5 text-white transition-colors duration-200 hover:bg-gray-600 focus:outline-none"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div
+        class="flex items-center justify-center bg-gray-50 py-4 text-center dark:bg-gray-700"
+      >
+        <span class="text-sm text-gray-600 dark:text-gray-200"
+          >Don't have an account?
+        </span>
+
+        <div
+          class="mx-2 text-sm font-bold text-blue-500 hover:underline dark:text-blue-400"
+        >
           <router-link to="/register">Register</router-link>
-        </p>
-        <button @click="modalResetPassword = true" class="float-right">
-          Reset Password
-        </button>
+        </div>
       </div>
     </div>
   </div>
+
   <Modal v-if="modalActive">
     <h1 class="title">{{ errorMsg }}</h1>
     <button @click="modalActive = false" class="btn shadow-red-400/50">
@@ -44,7 +71,7 @@
       type="email"
       v-model="resetEmail"
       placeholder="Your email"
-      class="h-10 w-4/5 rounded-md border-2 border-black px-2 placeholder:italic focus:outline-none"
+      class="mt-2 block w-full rounded-md border border-gray-700 bg-white px-4 py-2 text-gray-700 placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
     />
     <button
       @click="ResetPassword()"
@@ -69,11 +96,8 @@
 
 <script setup>
 import Modal from "../components/Modal.vue";
-import { ref, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
+import { ref } from "vue";
 import useAuth from "../composable/useAuth.js";
-import { onAuthStateChanged } from "firebase/auth";
-import { firebaseAuth } from "../composable/useFirebase.js";
 
 const { login, resetPassword } = useAuth();
 
@@ -85,8 +109,6 @@ const modalActive = ref(false);
 const modalResetPassword = ref(false);
 const resetPasswordSuccess = ref(false);
 const resetEmail = ref("");
-
-const router = useRouter();
 
 const handleError = (error) => {
   switch (error) {
@@ -101,12 +123,16 @@ const handleError = (error) => {
   modalActive.value = true;
 };
 const Login = async () => {
-  await login(username.value, password.value)
-    .then()
-    .catch((error) => {
-      handleError(error.code);
-    });
-  gotoHome();
+  if ((username.value || password.value) != "") {
+    await login(username.value, password.value)
+      .then()
+      .catch((error) => {
+        handleError(error.code);
+      });
+  } else {
+    errorMsg.value = "Please type in your email address or password";
+    modalActive.value = true;
+  }
 };
 const ResetPassword = async () => {
   if (resetEmail.value != "") {
@@ -115,18 +141,6 @@ const ResetPassword = async () => {
     resetPasswordSuccess.value = true;
   }
 };
-const gotoHome = () => {
-  onAuthStateChanged(firebaseAuth, (user) => {
-    if (user) {
-      router.push("/");
-    }
-  });
-};
-onBeforeMount(() => {
-  if (firebaseAuth.currentUser) {
-    router.push("/");
-  }
-});
 </script>
 
 <style scoped></style>
