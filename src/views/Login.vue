@@ -52,7 +52,7 @@
         </span>
 
         <div
-          class="mx-2 text-sm font-bold text-blue-500 hover:underline dark:text-blue-400"
+          class="mx-2 text-sm font-bold text-sky-500 hover:underline dark:text-sky-400"
         >
           <router-link to="/register">Register</router-link>
         </div>
