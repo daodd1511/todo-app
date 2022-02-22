@@ -80,16 +80,18 @@
     </div>
   </div>
   <Modal v-if="modalActive" :isDark="store.isDark">
-    <h1 class="title dark:text-dark-text">Do you want to log out</h1>
-    <button
-      @click="logout(), (modalActive = false)"
-      class="btn bg-sky-400 shadow-sky-400/50"
-    >
-      <router-link to="/">Yes</router-link>
-    </button>
-    <button @click="modalActive = false" class="btn shadow-red-400/50">
-      No
-    </button>
+    <h1 class="title dark:text-dark-text">Do you want to log out?</h1>
+    <div class="flex w-full justify-around">
+      <button @click="modalActive = false" class="btn shadow-red-400/50">
+        No
+      </button>
+      <button
+        @click="logout(), (modalActive = false)"
+        class="btn bg-sky-400 shadow-sky-400/50"
+      >
+        <router-link to="/">Yes</router-link>
+      </button>
+    </div>
   </Modal>
 </template>
 <script setup>
