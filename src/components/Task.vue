@@ -14,12 +14,24 @@
     >
       <i :class="[props.task.done ? taskDone.icon : taskNotDone.icon]"></i>
     </div>
-    <p
+    <label
       :class="[props.task.done ? taskDone.text : taskNotDone.text]"
       class="w-3/4 break-words"
+      v-if="props.task != editedTask"
+      @dblclick="edit(props.task)"
     >
       {{ props.task.content }}
-    </p>
+    </label>
+    <input
+      v-else
+      type="text"
+      v-model="props.task.content"
+      class="w-3/4"
+      @vnode-mounted="({ el }) => el.focus()"
+      @blur="doneEdit(props.task)"
+      @keyup.enter="doneEdit(props.task)"
+      @keyup.escape="cancelEdit(props.task)"
+    />
     <i
       class="absolute right-5 h-[18px] w-[18px] cursor-pointer bg-icon-cross transition-all hover:rotate-90"
       @click="
@@ -35,6 +47,9 @@
 <script setup>
 import { useStore } from "../store/store.js";
 import { firebaseAuth } from "../composable/useFirebase.js";
+import useFireStore from "../composable/useFireStore";
+import { ref } from "vue";
+const { addData } = useFireStore();
 const store = useStore();
 const props = defineProps({
   task: Object,
@@ -46,6 +61,24 @@ const taskDone = {
 const taskNotDone = {
   icon: ["w-5 h-5 border-2 rounded-full border-gray-200"],
   text: ["dark:text-dark-text"],
+};
+let beforeEditCache = "";
+const editedTask = ref();
+const edit = (task) => {
+  beforeEditCache = task.content;
+  editedTask.value = task;
+};
+const doneEdit = (task) => {
+  if (editedTask.value) {
+    editedTask.value = null;
+    task.content = task.content.trim();
+    addData(store.tasks, firebaseAuth.currentUser.uid);
+    if (!task.content) store.removeTask(task, firebaseAuth.currentUser.uid);
+  }
+};
+const cancelEdit = (task) => {
+  editedTask.value = null;
+  task.content = beforeEditCache;
 };
 </script>
 
