@@ -7,6 +7,7 @@
 npm run build
 # Copy redirect file
 cp _redirects dist
+cp 404.html dist
 # navigate into the build output directory
 cd dist
 
