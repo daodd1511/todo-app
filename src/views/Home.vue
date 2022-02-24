@@ -1,69 +1,68 @@
 <template>
   <div :class="[store.isDark ? `dark` : ``]">
-    <div class="h-screen dark:bg-dark-bg">
+    <div class="h-full dark:bg-dark-bg">
       <div
         class="z-0 h-72 bg-desktop-light bg-cover bg-center dark:bg-desktop-dark"
+      ></div>
+      <div
+        class="container z-10 mx-auto -mt-52 h-auto w-11/12 pb-40 md:w-3/5 lg:w-2/5"
       >
+        <div class="flex justify-between">
+          <h1 class="text-3xl font-bold tracking-widest text-very-light-gray">
+            TODO
+          </h1>
+          <i
+            class="h-[26px] w-[26px] cursor-pointer bg-icon-moon transition delay-1000 ease-in dark:bg-icon-sun"
+            @click="store.toggleTheme"
+          ></i>
+        </div>
         <div
-          class="container z-10 mx-auto h-auto w-11/12 pt-16 pb-40 sm:py-16 md:w-3/5 lg:w-2/5"
+          class="mt-12 mb-8 flex h-12 w-full items-center gap-4 rounded bg-white px-4 dark:bg-dark-bg-secondary"
         >
-          <div class="flex justify-between">
-            <h1 class="text-3xl font-bold tracking-widest text-very-light-gray">
-              TODO
-            </h1>
-            <i
-              class="h-[26px] w-[26px] cursor-pointer bg-icon-moon transition delay-1000 ease-in dark:bg-icon-sun"
-              @click="store.toggleTheme"
-            ></i>
-          </div>
-          <div
-            class="mt-12 mb-8 flex h-12 w-full items-center gap-4 rounded bg-white px-4 dark:bg-dark-bg-secondary"
+          <div class="h-5 w-5 rounded-full border-2 border-gray-200"></div>
+          <input
+            type="text"
+            class="w-full caret-bright-blue placeholder:text-dark-grayish-blue focus:outline-none dark:bg-dark-bg-secondary dark:text-dark-text"
+            placeholder="Add a new task"
+            v-model="newTask"
+            @keypress.enter="addTask"
+          />
+        </div>
+        <div class="overflow-hidden rounded-t shadow-xl">
+          <Task
+            v-for="(task, i) in store.filteredTasks"
+            :key="i"
+            :task="task"
+          />
+        </div>
+        <div
+          class="relative flex h-12 w-full items-center justify-between rounded-b bg-white px-4 shadow-xl dark:bg-dark-bg-secondary"
+        >
+          <p
+            class="text-xs text-dark-grayish-blue dark:text-dark-text-secondary"
           >
-            <div class="h-5 w-5 rounded-full border-2 border-gray-200"></div>
-            <input
-              type="text"
-              class="w-full caret-bright-blue placeholder:text-dark-grayish-blue focus:outline-none dark:bg-dark-bg-secondary dark:text-dark-text"
-              placeholder="Add a new task"
-              v-model="newTask"
-              @keypress.enter="addTask"
-            />
-          </div>
-          <div class="overflow-hidden rounded-t shadow-xl">
-            <Task
-              v-for="(task, i) in store.filteredTasks"
-              :key="i"
-              :task="task"
-            />
-          </div>
+            {{ store.counter }}
+            {{ store.counter >= 2 ? `tasks` : `task` }} left
+          </p>
           <div
-            class="relative flex h-12 w-full items-center justify-between rounded-b bg-white px-4 shadow-xl dark:bg-dark-bg-secondary"
+            class="absolute bottom-[-5rem] left-0 flex h-12 w-full justify-center gap-4 rounded bg-white text-sm shadow-xl dark:bg-dark-bg-secondary sm:static sm:w-fit sm:shadow-none"
           >
-            <p
-              class="text-xs text-dark-grayish-blue dark:text-dark-text-secondary"
-            >
-              {{ store.counter }}
-              {{ store.counter >= 2 ? `tasks` : `task` }} left
-            </p>
-            <div
-              class="absolute bottom-[-5rem] left-0 flex h-12 w-full justify-center gap-4 rounded bg-white text-sm shadow-xl dark:bg-dark-bg-secondary sm:static sm:w-fit sm:shadow-none"
-            >
-              <button
-                v-for="(item, i) in sortItems"
-                :key="i"
-                @click="store.filterTask(item)"
-                class="dark:text-dark-text-secondary"
-                :class="[store.activeEl === i ? `active` : ``]"
-              >
-                {{ item.name }}
-              </button>
-            </div>
             <button
-              class="text-sm dark:text-dark-text-secondary"
-              @click="clear()"
+              v-for="(item, i) in sortItems"
+              :key="i"
+              @click="store.filterTask(item)"
+              class="dark:text-dark-text-secondary"
+              :class="[store.activeEl === i ? `active` : ``]"
             >
-              Clear Completed
+              {{ item.name }}
             </button>
           </div>
+          <button
+            class="text-sm dark:text-dark-text-secondary"
+            @click="clear()"
+          >
+            Clear Completed
+          </button>
         </div>
       </div>
     </div>
