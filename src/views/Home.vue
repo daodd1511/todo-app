@@ -1,6 +1,6 @@
 <template>
   <div :class="[store.isDark ? `dark` : ``]">
-    <div class="h-full dark:bg-dark-bg">
+    <div class="h-full min-h-screen dark:bg-dark-bg">
       <div
         class="z-0 h-72 bg-desktop-light bg-cover bg-center dark:bg-desktop-dark"
       ></div>
