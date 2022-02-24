@@ -65,17 +65,17 @@
           </button>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="absolute top-5 right-5 lg:top-10 lg:right-10">
-    <button v-if="!isAuthenticated">
-      <router-link to="/login">Login</router-link>
-    </button>
-    <div v-else>
-      Hi {{ firebaseAuth.currentUser.email.split("@")[0] }},
-      <button @click="modalActive = true">
-        <router-link to="/">Logout</router-link>
-      </button>
+      <div class="absolute top-5 right-5 dark:text-white lg:top-10 lg:right-10">
+        <button v-if="!isAuthenticated">
+          <router-link to="/login">Login</router-link>
+        </button>
+        <div v-else>
+          Hi {{ firebaseAuth.currentUser.email.split("@")[0] }},
+          <button @click="modalActive = true">
+            <router-link to="/">Logout</router-link>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <Modal v-if="modalActive" :isDark="store.isDark">
