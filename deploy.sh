@@ -5,7 +5,9 @@
 
 # build
 npm run build
-
+# Copy 404 and redirect file
+cp 404.html dist
+cp _redirects dist
 # navigate into the build output directory
 cd dist
 
