@@ -34,13 +34,13 @@ export const useStore = defineStore("main", {
     },
     filterTask(item) {
       this.activeEl = item.id;
-      this.filteredTasks = this.tasks.filter((value) => {
+      this.filteredTasks = this.tasks.filter((task) => {
         if (item.name == "Active") {
-          return value.done == false;
+          return task.done == false;
         } else if (item.name == "Completed") {
-          return value.done == true;
+          return task.done == true;
         } else if (item.name == "All") {
-          return value;
+          return task;
         }
       });
     },
