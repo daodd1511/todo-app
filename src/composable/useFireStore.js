@@ -24,10 +24,23 @@ const useFireStore = () => {
           store.filteredTasks = store.tasks;
         }
       });
+      const queryGetTheme = await getDocs(collection(db, "theme"));
+      queryGetTheme.forEach((theme) => {
+        if (theme.id == uid) {
+          store.isDark = theme.data().theme;
+        }
+      });
     } catch (error) {
       console.log("Error handling document: ", error);
     }
   };
-  return { addData, readData };
+  const updateTheme = async (uid) => {
+    const store = useStore();
+    const theme = store.isDark;
+    await setDoc(doc(db, "theme", uid), {
+      theme,
+    });
+  };
+  return { addData, readData, updateTheme };
 };
 export default useFireStore;

@@ -13,7 +13,12 @@
           </h1>
           <i
             class="h-[26px] w-[26px] cursor-pointer bg-icon-moon transition delay-1000 ease-in dark:bg-icon-sun"
-            @click="store.toggleTheme"
+            @click="
+              store.toggleTheme(),
+                firebaseAuth.currentUser
+                  ? updateTheme(firebaseAuth.currentUser.uid)
+                  : null
+            "
           ></i>
         </div>
         <div
@@ -102,7 +107,7 @@ import useAuth from "../composable/useAuth.js";
 import useFireStore from "../composable/useFireStore";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../composable/useFirebase.js";
-const { addData, readData } = useFireStore();
+const { addData, readData, updateTheme } = useFireStore();
 const { logout } = useAuth();
 const store = useStore();
 const newTask = ref("");
