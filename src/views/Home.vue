@@ -55,7 +55,7 @@
             <button
               v-for="(item, i) in sortItems"
               :key="i"
-              @click="store.filterTask(item)"
+              @click="store.filterTask(item.name), (store.activeEl = item.id)"
               class="dark:text-dark-text-secondary"
               :class="[store.activeEl === i ? `active` : ``]"
             >
