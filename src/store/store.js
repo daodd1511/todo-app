@@ -30,16 +30,17 @@ export const useStore = defineStore("main", {
       if (!task.done) {
         this.counter--;
       }
-      addData(this.tasks, uid);
+      if (uid) {
+        addData(this.tasks, uid);
+      }
     },
-    filterTask(item) {
-      this.activeEl = item.id;
+    filterTask(filterName) {
       this.filteredTasks = this.tasks.filter((task) => {
-        if (item.name == "Active") {
+        if (filterName == "Active") {
           return task.done == false;
-        } else if (item.name == "Completed") {
+        } else if (filterName == "Completed") {
           return task.done == true;
-        } else if (item.name == "All") {
+        } else if (filterName == "All") {
           return task;
         }
       });
@@ -51,7 +52,9 @@ export const useStore = defineStore("main", {
       } else {
         this.counter++;
       }
-      addData(this.tasks, uid);
+      if (uid) {
+        addData(this.tasks, uid);
+      }
     },
     toggleTheme() {
       this.isDark = !this.isDark;
