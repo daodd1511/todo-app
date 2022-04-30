@@ -10,7 +10,8 @@
           props.task,
           firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
         ),
-          RerenderFilteredTasks()
+          RerenderFilteredTasks(),
+          CheckHaveComletedTasks()
       "
     >
       <i :class="[props.task.done ? taskDone.icon : taskNotDone.icon]"></i>
@@ -39,7 +40,8 @@
         store.removeTask(
           props.task,
           firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
-        )
+        ),
+          CheckHaveComletedTasks()
       "
     ></i>
   </div>
@@ -55,14 +57,6 @@ const store = useStore();
 const props = defineProps({
   task: Object,
 });
-const RerenderFilteredTasks = () => {
-  if (store.activeEl == 1) {
-    store.filterTask("Active");
-  }
-  if (store.activeEl == 2) {
-    store.filterTask("Completed");
-  }
-};
 // Css for different task state
 const taskDone = {
   icon: ["bg-icon-check w-[11px] h-[9px]"],
@@ -89,6 +83,23 @@ const doneEdit = (task) => {
 const cancelEdit = (task) => {
   editedTask.value = null;
   task.content = beforeEditCache;
+};
+const RerenderFilteredTasks = () => {
+  if (store.activeEl == 1) {
+    store.filterTask("Active");
+  }
+  if (store.activeEl == 2) {
+    store.filterTask("Completed");
+  }
+};
+const CheckHaveComletedTasks = () => {
+  for (let task of store.filteredTasks) {
+    if (task.done) {
+      store.haveCompletedTasks = true;
+      break;
+    }
+    store.haveCompletedTasks = false;
+  }
 };
 </script>
 
