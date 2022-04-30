@@ -63,8 +63,15 @@
             </button>
           </div>
           <button
+            type="button"
             class="text-sm dark:text-dark-text-secondary"
+            :class="
+              store.haveCompletedTasks
+                ? ``
+                : `cursor-not-allowed text-very-light-grayish-blue`
+            "
             @click="clear()"
+            :disabled="!store.haveCompletedTasks"
           >
             Clear Completed
           </button>
@@ -136,6 +143,7 @@ const clear = () => {
         firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
       );
       store.activeEl = 0;
+      store.haveCompletedTasks = false;
     }
   }
 };
