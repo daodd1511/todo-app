@@ -68,7 +68,7 @@
             :class="
               store.haveCompletedTasks
                 ? ``
-                : `cursor-not-allowed text-very-light-grayish-blue`
+                : `cursor-not-allowed text-very-light-grayish-blue dark:text-[#404251]`
             "
             @click="clear()"
             :disabled="!store.haveCompletedTasks"
