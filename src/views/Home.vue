@@ -155,6 +155,7 @@ onBeforeMount(() => {
         return !task.done;
       }).length;
       isAuthenticated.value = true;
+      store.checkHaveCompletedTasks();
     } else {
       isAuthenticated.value = false;
       store.$reset();

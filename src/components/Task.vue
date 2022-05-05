@@ -11,7 +11,7 @@
           firebaseAuth.currentUser != null ? firebaseAuth.currentUser.uid : ``
         ),
           RerenderFilteredTasks(),
-          CheckHaveComletedTasks()
+          store.checkHaveCompletedTasks()
       "
     >
       <i :class="[props.task.done ? taskDone.icon : taskNotDone.icon]"></i>
@@ -90,15 +90,6 @@ const RerenderFilteredTasks = () => {
   }
   if (store.activeEl == 2) {
     store.filterTask("Completed");
-  }
-};
-const CheckHaveComletedTasks = () => {
-  for (let task of store.filteredTasks) {
-    if (task.done) {
-      store.haveCompletedTasks = true;
-      break;
-    }
-    store.haveCompletedTasks = false;
   }
 };
 </script>

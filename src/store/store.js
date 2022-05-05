@@ -60,5 +60,14 @@ export const useStore = defineStore("main", {
     toggleTheme() {
       this.isDark = !this.isDark;
     },
+    checkHaveCompletedTasks() {
+      for (let task of this.filteredTasks) {
+        if (task.done) {
+          this.haveCompletedTasks = true;
+          break;
+        }
+        this.haveCompletedTasks = false;
+      }
+    },
   },
 });
